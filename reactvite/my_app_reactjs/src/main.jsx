@@ -9,7 +9,7 @@ import Inscription from './composants/inscription/Inscription.jsx'
 import Montres from './composants/montres/Montres.jsx'
 import Vetements from './composants/vetements/Vetements.jsx'
 import Chaussures from './composants/chaussures/Chaussures.jsx'
-
+import {Toaster} from "react-hot-toast";
 
 
 const route = createBrowserRouter([
@@ -51,6 +51,9 @@ const route = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <RouterProvider router={route} />
+    <Toaster></Toaster>
+   <RouterProvider router={route}>
+
+    </RouterProvider> 
    </React.StrictMode>,
 );

@@ -2,16 +2,23 @@ import { Button, Stack, TextField, Typography ,Box, } from '@mui/material'
 import React from 'react'
 import './inscription.css'
 import { useForm } from "react-hook-form"
-
+import { toast } from 'react-hot-toast'
+import axios  from 'axios'
 import { useNavigate} from "react-router-dom";
+
 
 export default function Inscription() {
   const navigate =useNavigate();
-  const {handleSubmit, register, formState: { errors }} = useForm();
+  const {handleSubmit, register, formState: { errors },} = useForm();
   const onSubmit = (data) => { 
-    if(data.motdepasse !== confirationdumotdepasse ) {alert("les mots de passe ne sont pas identiques");
-  }
-  }
+    if(data.motdepasse !== data.confirationdumotdepasse ) {toast.error("les mots de passe ne sont pas identiques");
+  } else { axios.post("http://localhost:5173/utilisateurs",data).then((res) => {
+    console.log(res);
+    toast.success("inscription reussie.");})
+    .catch((err) => {
+      console.log(err);
+      toast.error("une erreur est survenue");
+  })}};
   return (
     <Stack>
       <Box>
@@ -62,7 +69,7 @@ export default function Inscription() {
        fullWidth
        size='small'
        type='password'
-       {...register("confirationdumotdepasse", { required:"veuillez confirmer votre mot de passe",
+       {...register("confirationdumotdepasse", { required:"veuillez confirmer votre mot de passe",pattern: /^[A-Za-z]+$/i  ,
       minLenght: { value:8, message: "veuillez entrer un mot de passe de minimum 8 caracter"}})}
        
        
@@ -85,4 +92,5 @@ export default function Inscription() {
       
   )
 }
+
 

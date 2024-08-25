@@ -6,11 +6,11 @@ const routerU =express.Router()
 
 //  pour faire une commande
 
-routerU.post("/signin/",signin)
+routerU.route("/Users.controller/",).post(signin);
 
 // inscription
 
-routerU.post("/inscription/:idproduits,sigup")
+routerU.post("/inscription/:idproduits",sigup)
 routerU.post("/mettre à jour/:idUsers, updUsers")
 
 module.exports= routerU

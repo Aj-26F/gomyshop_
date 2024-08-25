@@ -1,14 +1,22 @@
 const { users } =require("../models/Users");
+const client = require("../gestionbd/index.js");
 const bcrypt=require("bcrypt")
 const jwt = require("jsonwebtoken")
+
+
+
 module.exports.sigup= async (req,res)=>{
+    
 const i_Users=req.body
 const { password } = req.body;
 
+
 const passCrypt= await bcrypt.hash(password,8)
 
+// ajouter un utilisateur
+
 try{
-    const o_Users= new users( {...i_Users, password: passCrypt });
+   let const o_Users= new users( {i_Users, password: passCrypt });
 o_Users.save()
 return res,send( "ok")
 
@@ -17,6 +25,8 @@ catch(err){ console.log(erreur)}
 
 }
 
+
+// retrouver un utilisateur
 
 module.exports.signin= async( req,res) =>{
    const {password, email}=req.body;

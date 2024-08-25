@@ -1,8 +1,35 @@
 // gerer la connection avec la base de données
-const mongoose = require('mongoose')
-const path = require('path')
-const url ='http://'
-Mongoose.connect(url,{}).then(()=>{
-    console.log('connectée à la base de données')
-})
-.catch((err)=> {console.log(erreur)})
+const {MongoClient} = require('mongodb');
+
+var client = null
+function connecter(url, callback){
+    if(client=null){
+        client=new MongoClient(url);
+
+        client.connect((erreur) =>{
+            if(erreur){
+                client= null;
+                callback(erreur);}
+                else{
+                    callback();
+                }
+            })}
+    else{
+        callback();
+        
+    }
+}
+
+function bd() {
+    return new Db(client, "dbec");
+}
+
+function fermerConnexion() {
+    if (client) {
+        client.close();
+        client= null;
+    }
+}
+  
+
+module.exports = {bd,connecter,fermerConnexion};
